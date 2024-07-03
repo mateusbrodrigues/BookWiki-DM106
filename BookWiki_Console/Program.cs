@@ -1,4 +1,12 @@
-﻿using BookWiki_Console;
+﻿using BookWiki.Shared.Data.DB;
+using BookWiki_Console;
+
+var BookDAL = new BookDAL(new BookWikiContext());
+var AuthorDAL = new AuthorDAL(new BookWikiContext());
+
+/*AuthorDAL.Create(new Author("Test"));
+var authorList = AuthorDAL.Read();
+foreach (var author in authorList) Console.WriteLine(author);*/
 
 Dictionary<string, Book> BookDict = new();
 
@@ -59,7 +67,7 @@ void BookGet()
 {
     Console.Clear();
     Console.WriteLine("Listagem de Livros\n");
-    foreach (var book in BookDict.Values)
+    foreach (var book in BookDAL.Read())
     {
         Console.WriteLine(book);
     }
@@ -93,6 +101,6 @@ void BookRegister()
     Console.Write("Digite o ano de lançamento do livro: ");
     string publicationYear = Console.ReadLine();
     Book book = new Book(title, summary, Convert.ToInt32(publicationYear));
-    BookDict.Add(title, book);
+    BookDAL.create(book);
     Console.WriteLine($"Livro {title} adicionado!");
 }

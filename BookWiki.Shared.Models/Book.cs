@@ -7,8 +7,9 @@ using System.Xml.Linq;
 
 namespace BookWiki_Console
 {
-    internal class Book
+    public class Book
     {
+        public int Id { get; set; }
         public Book(string title, string summary, int publicationYear)
         {
             Title = title;
