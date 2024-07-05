@@ -22,17 +22,18 @@ namespace BookWiki_Console
         public string Summary { get; set; }
         public int PublicationYear { get; set; }
 
-        public List<Author> authors = new List<Author>();
+        public virtual IEnumerable<Author> Authors { get; set; } = new List<Author>();
 
         public void AddAuthor(Author author)
         {
-            authors.Add(author);
+            //Authors.Add(author);
+            Authors.Append(author);
         }
 
         public void ShowAuthors()
         {
             Console.WriteLine($"Autores de {Title}:");
-            foreach (var author in authors)
+            foreach (var author in Authors)
             {
                 Console.WriteLine(author);
             }
@@ -40,7 +41,7 @@ namespace BookWiki_Console
 
         public override string ToString()
         {
-            return $@"Nome do livro: {Title}";
+            return $@"Id: {Id} | Nome do livro: {Title}";
         }
 
     }

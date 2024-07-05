@@ -18,9 +18,11 @@ namespace BookWiki_Console
         public string Name { get; set; }
         public string Nationality { get; set; }
 
+        public virtual Book? Book { get; set; }
+
         public override string ToString()
         {
-            return $@"Author: {Name}";
+            return $@"Id: {Id} | Author: {Name}";
         }
     }
 }

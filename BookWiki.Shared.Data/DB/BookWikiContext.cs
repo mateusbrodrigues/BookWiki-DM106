@@ -13,11 +13,11 @@ namespace BookWiki.Shared.Data.DB
         public DbSet<Book> Book { get; set; }
         public DbSet<Author> Author { get; set; }
 
-        private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BookWiki_DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+        private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BookWiki_DB_V1;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(connectionString).UseLazyLoadingProxies();
         }
 
     }
