@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace BookWiki.Shared.Data.DB
 {
     public class BookWikiContext: DbContext {
+
         public DbSet<Book> Book { get; set; }
         public DbSet<Author> Author { get; set; }
 
