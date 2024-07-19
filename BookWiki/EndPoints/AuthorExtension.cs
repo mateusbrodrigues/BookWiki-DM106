@@ -14,7 +14,11 @@ namespace BookWiki.EndPoints
         public static void AddEndPointsAuthor(this WebApplication app)
         {
 
-            app.MapGet("/Author", ([FromServices] DAL<Author> dal) =>
+            var groupBuilder = app.MapGroup("authors")
+                    .RequireAuthorization()
+                    .WithTags("Authors");
+
+            groupBuilder.MapGet("", ([FromServices] DAL<Author> dal) =>
             {
                 var authorList = dal.Read();
                 if (authorList is null) return Results.NotFound();
@@ -22,13 +26,13 @@ namespace BookWiki.EndPoints
                 return Results.Ok(authorResponseList);
             });
 
-            app.MapPost("/Author", ([FromServices] DAL<Author> dal, [FromBody] AuthorRequest authorRequest) =>
+            groupBuilder.MapPost("", ([FromServices] DAL<Author> dal, [FromBody] AuthorRequest authorRequest) =>
             {
                 dal.Create(new Author(authorRequest.name));
                 return Results.Ok();
             });
 
-            app.MapDelete("/Author/{id}", ([FromServices] DAL<Author> dal, int id) =>
+            groupBuilder.MapDelete("/{id}", ([FromServices] DAL<Author> dal, int id) =>
             {
                 var author = dal.ReadBy(a => a.Id == id);
                 if (author is null) return Results.NotFound();
@@ -36,7 +40,7 @@ namespace BookWiki.EndPoints
                 return Results.NoContent();
             });
 
-            app.MapPut("/Author", ([FromServices] DAL<Author> dal, [FromBody] AuthorEditRequest authorRequest) =>
+            groupBuilder.MapPut("", ([FromServices] DAL<Author> dal, [FromBody] AuthorEditRequest authorRequest) =>
             {
                 var authorToEdit = dal.ReadBy(a => a.Id == authorRequest.id);
                 if (authorToEdit is null) return Results.NotFound();
@@ -46,7 +50,7 @@ namespace BookWiki.EndPoints
                 return Results.Ok();
             });
 
-            app.MapGet("/Author{id}", ([FromServices] DAL<Author> dal, int id) =>
+            groupBuilder.MapGet("/{id}", ([FromServices] DAL<Author> dal, int id) =>
             {
                 var author = dal.ReadBy(a => a.Id == id);
                 if (author is null) return Results.NotFound();

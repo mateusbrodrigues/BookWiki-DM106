@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookWiki.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,8 +23,8 @@ namespace BookWiki_Console
         public string Summary { get; set; }
         public int PublicationYear { get; set; }
 
-        public virtual IEnumerable<Author> Authors { get; set; } = new List<Author>();
-
+        public virtual ICollection<Author> Authors { get; set; } = new List<Author>();
+        public virtual ICollection<Genre> Genres { get; set; }
         public void AddAuthor(Author author)
         {
             //Authors.Add(author);
