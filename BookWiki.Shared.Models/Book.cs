@@ -25,6 +25,7 @@ namespace BookWiki_Console
 
         public virtual ICollection<Author> Authors { get; set; } = new List<Author>();
         public virtual ICollection<Genre> Genres { get; set; }
+        public virtual ICollection<Publisher> Publishers { get; set; } = new List<Publisher>();
         public void AddAuthor(Author author)
         {
             //Authors.Add(author);

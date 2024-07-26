@@ -17,6 +17,7 @@ builder.Services.AddDbContext<BookWikiContext>();
 builder.Services.AddTransient<DAL<Book>>();
 builder.Services.AddTransient<DAL<Author>>();
 builder.Services.AddTransient<DAL<Genre>>();
+builder.Services.AddTransient<DAL<Publisher>>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -31,6 +32,7 @@ app.UseAuthorization();
 app.AddEndPointsBook();
 app.AddEndPointsAuthor();
 app.AddEndPointsGenre();
+app.AddEndPointsPublisher();
 
 app.UseSwagger();
 app.UseSwaggerUI();

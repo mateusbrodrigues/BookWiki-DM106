@@ -4,6 +4,7 @@ using BookWiki.Shared.Data.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookWiki.Shared.Data.Migrations
 {
     [DbContext(typeof(BookWikiContext))]
-    partial class BookWikiContextModelSnapshot : ModelSnapshot
+    [Migration("20240726003410_RelateBookPublisher")]
+    partial class RelateBookPublisher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,6 +195,9 @@ namespace BookWiki.Shared.Data.Migrations
                     b.Property<int>("PublicationYear")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PublisherId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Summary")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -201,6 +207,8 @@ namespace BookWiki.Shared.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PublisherId");
 
                     b.ToTable("Book");
                 });
@@ -213,9 +221,6 @@ namespace BookWiki.Shared.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BookId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -225,8 +230,6 @@ namespace BookWiki.Shared.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BookId");
 
                     b.ToTable("Publisher");
                 });
@@ -358,13 +361,13 @@ namespace BookWiki.Shared.Data.Migrations
                     b.Navigation("Book");
                 });
 
-            modelBuilder.Entity("BookWiki_Console.Publisher", b =>
+            modelBuilder.Entity("BookWiki_Console.Book", b =>
                 {
-                    b.HasOne("BookWiki_Console.Book", "Book")
-                        .WithMany("Publishers")
-                        .HasForeignKey("BookId");
+                    b.HasOne("BookWiki_Console.Publisher", "Publisher")
+                        .WithMany("Books")
+                        .HasForeignKey("PublisherId");
 
-                    b.Navigation("Book");
+                    b.Navigation("Publisher");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -421,8 +424,11 @@ namespace BookWiki.Shared.Data.Migrations
             modelBuilder.Entity("BookWiki_Console.Book", b =>
                 {
                     b.Navigation("Authors");
+                });
 
-                    b.Navigation("Publishers");
+            modelBuilder.Entity("BookWiki_Console.Publisher", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

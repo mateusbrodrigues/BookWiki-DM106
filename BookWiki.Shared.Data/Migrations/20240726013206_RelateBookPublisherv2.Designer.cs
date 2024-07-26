@@ -4,6 +4,7 @@ using BookWiki.Shared.Data.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookWiki.Shared.Data.Migrations
 {
     [DbContext(typeof(BookWikiContext))]
-    partial class BookWikiContextModelSnapshot : ModelSnapshot
+    [Migration("20240726013206_RelateBookPublisherv2")]
+    partial class RelateBookPublisherv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
